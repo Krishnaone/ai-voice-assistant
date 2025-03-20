@@ -1,1 +1,128 @@
-const _0xabc1=["\x73\x70\x65\x61\x6B","\x72\x61\x74\x65","\x76\x6F\x6C\x75\x6D\x65","\x70\x69\x74\x63\x68","\x73\x70\x65\x65\x63\x68\x53\x79\x6E\x74\x68\x65\x73\x69\x73","\x73\x70\x65\x61\x6B\x53\x79\x6E\x74\x68\x65\x73\x69\x73","\x51\x75\x65\x72\x79\x53\x65\x6C\x65\x63\x74\x6F\x72","\x2E\x74\x61\x6C\x6B","\x2E\x63\x6F\x6E\x74\x65\x6E\x74","\x6C\x6F\x77\x65\x72\x43\x61\x73\x65","\x74\x72\x69\x6D","\x69\x6E\x63\x6C\x75\x64\x65\x73","\x68\x61\x72\x73\x68\x69\x74\x61","\x62\x61\x62\x79\x67\x75\x72\x6C","\x4D\x61\x73\x74\x65\x72","\x48\x6F\x77\x20\x63\x61\x6E\x20\x49\x20\x61\x73\x73\x69\x73\x74\x20\x79\x6F\x75\x20\x74\x6F\x64\x61\x79\x3F","\x47\x6F\x6F\x64\x20\x4D\x6F\x72\x6E\x69\x6E\x67\x21","\x47\x6F\x6F\x64\x20\x41\x66\x74\x65\x72\x6E\x6F\x6F\x6E\x21","\x47\x6F\x6F\x64\x20\x45\x76\x65\x6E\x69\x6E\x67\x21","\x69\x6E\x69\x74\x69\x61\x6C\x69\x7A\x69\x6E\x67\x20\x4A\x41\x52\x56\x49\x53\x2E\x2E\x2E","\x57\x68\x61\x74\x20\x69\x73\x20\x79\x6F\x75\x72\x20\x6E\x61\x6D\x65\x3F","\x57\x65\x62\x4B\x69\x74\x53\x70\x65\x65\x63\x68\x52\x65\x63\x6F\x67\x6E\x69\x74\x69\x6F\x6E","\x77\x65\x62\x6B\x69\x74\x53\x70\x65\x65\x63\x68\x52\x65\x63\x6F\x67\x6E\x69\x74\x69\x6F\x6E","\x53\x6F\x72\x72\x79\x2C\x20\x49\x20\x64\x69\x64\x6E\x27\x74\x20\x63\x61\x74\x63\x68\x20\x74\x68\x61\x74\x2E\x20\x50\x6C\x65\x61\x73\x65\x20\x74\x72\x79\x20\x61\x67\x61\x69\x6E\x2E","\x63\x6C\x69\x63\x6B","\x4C\x69\x73\x74\x65\x6E\x69\x6E\x67\x2E\x2E\x2E"];const btn=document[_0xabc1[6]](_0xabc1[7]);const content=document[_0xabc1[6]](_0xabc1[8]);let userName=``;function speak(text){const text_speak=new SpeechSynthesisUtterance(text);text_speak[_0xabc1[1]]=1;text_speak[_0xabc1[2]]=1;text_speak[_0xabc1[3]]=1;window[_0xabc1[4]][_0xabc1[5]](text_speak)}function askForName(){speak(_0xabc1[20])}function setUserName(name){userName=name[_0xabc1[9]]()[_0xabc1[10]]();console[_0xabc1[0]](_0xabc1[21],userName);if(userName[_0xabc1[11]](_0xabc1[12])){speak(_0xabc1[13])}else {speak(_0xabc1[14])}}function wishMe(){let hour=new Date().getHours();let greeting=(hour<12)?_0xabc1[16]:(hour<17)?_0xabc1[17]:_0xabc1[18];speak(greeting)}window.addEventListener(`load`,()=>{speak(_0xabc1[19]);askForName()});const recognition=new (window[_0xabc1[22]]||window[_0xabc1[23]])();recognition.onresult=(event)=>{const transcript=event.results[event.resultIndex][0].transcript.toLowerCase().trim();content.textContent=transcript;setTimeout(()=>{if(!userName){console[_0xabc1[0]](`Recognized name: ${transcript}`);setUserName(transcript)}else {takeCommand(transcript)}},500)};recognition.onerror=(event)=>{content.textContent=_0xabc1[24]};btn.addEventListener(_0xabc1[25],()=>{content.textContent=_0xabc1[26];recognition.start()});
+    const btn = document.querySelector('.talk');
+    const content = document.querySelector('.content');
+    let userName = '';
+
+    function speak(text) {
+        const text_speak = new SpeechSynthesisUtterance(text);
+        text_speak.rate = 1;
+        text_speak.volume = 1;
+        text_speak.pitch = 1;
+
+        window.speechSynthesis.speak(text_speak);
+    }
+
+    function askForName() {
+        speak("What is your name?");
+    }
+
+    function setUserName(name) {
+        userName = name.toLowerCase().trim(); // Convert to lowercase and trim spaces
+        console.log("User name recognized as:", userName); // Debugging output
+
+        if (userName.includes('harshita')) { // Use includes() for flexibility
+            speak("Hello, babygurl! Bestie mode activated!");
+        } else {
+            speak("Hello, Master! How can I assist you today?");
+        }
+    }
+
+    function wishMe() {
+        let hour = new Date().getHours();
+        let greeting = (hour < 12) ? "Good Morning!" : (hour < 17) ? "Good Afternoon!" : "Good Evening!";
+        speak(greeting);
+    }
+
+    window.addEventListener('load', () => {
+        speak("Initializing JARVIS....");
+        askForName();
+    });
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+
+    recognition.onresult = (event) => {
+        const transcript = event.results[event.resultIndex][0].transcript.toLowerCase().trim();
+        content.textContent = transcript;
+
+        setTimeout(() => {
+            if (!userName) {
+                console.log(`Recognized name: ${transcript}`); // Debugging output
+                setUserName(transcript);
+            } else {
+                takeCommand(transcript);
+            }
+        }, 500);
+    };
+
+    recognition.onerror = (event) => {
+        content.textContent = "Sorry, I didn't catch that. Please try again.";
+    };
+
+    btn.addEventListener('click', () => {
+        content.textContent = "Listening....";
+        recognition.start();
+    });
+
+    function takeCommand(message) {
+        console.log(`User command: ${message}`); // Debugging output
+        if (message.includes('hey') || message.includes('hello')) {
+            speak(userName.includes('harshita') ? "Hey babygurl! How's your day going? 😊" : "Hey Master! How can I help you?");
+        } 
+        else if (message.includes('how are you')) {
+            speak(userName.includes('harshita') ? "I'm doing great, babygurl! How about you? 😊" : "I'm doing well, Master! Thank you for asking.");
+        } 
+        else if (message.includes('feeling down')) {
+            speak("Oh no, bestie! Let’s find something fun to do! 💕");
+        } 
+        else if (message.includes('motivation')) {
+            const motivationalQuotes = [
+                "You’re stronger than you think, babygurl! 💪",
+                "Every day is a new beginning, bestie! 🌈",
+                "Believe in yourself, babygurl! You got this! 🌟"
+            ];
+            const randomQuote = motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
+            speak(randomQuote);
+        } 
+        else if (message.includes("open google")) {
+            speak("Opening Google...");
+            setTimeout(() => {
+                window.open("https://www.google.com", "_blank");
+                speak("I've opened Google for you.");
+            }, 1000);
+        } 
+        else if (message.includes("open youtube")) {
+            speak("Opening YouTube...");
+            setTimeout(() => {
+                let win = window.open("https://www.youtube.com", "_blank");
+                if (!win) alert("Please allow popups for this site.");
+                else speak("I've opened YouTube for you.");
+            }, 1000);
+        } 
+        else if (message.includes('what is') || message.includes('who is') || message.includes('what are')) {
+            let query = message.replace(" ", "+");
+            speak(`Searching for ${message} on Google`);
+            setTimeout(() => {
+                window.open(`https://www.google.com/search?q=${query}`, "_blank");
+                speak(`I found some results for ${message}.`);
+            }, 1000);
+        } 
+        else if (message.includes('wikipedia')) {
+            let query = message.replace("wikipedia", "").trim();
+            speak(`Searching Wikipedia for ${query}`);
+            setTimeout(() => {
+                window.open(`https://en.wikipedia.org/wiki/${query}`, "_blank");
+                speak(`I found some results for ${query} on Wikipedia.`);
+            }, 1000);
+        } 
+        else if (message.includes('time')) {
+            let time = new Date().toLocaleTimeString();
+            speak(`The time is ${time}`);
+        } 
+        else if (message.includes('date')) {
+            let date = new Date().toLocaleDateString();
+            speak(`Today's date is ${date}`);
+        } 
+        else {
+            speak(userName.includes('harshita') ? "I’m here for you! What’s on your mind? 💖" : "I’m here for you, Master! What can I assist you with?");
+        }
+    }
