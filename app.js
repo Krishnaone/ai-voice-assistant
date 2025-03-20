@@ -1,6 +1,7 @@
 const btn = document.querySelector('.talk');
 const content = document.querySelector('.content');
 let userName = '';
+let initialized = false;
 
 function speak(text) {
     const text_speak = new SpeechSynthesisUtterance(text);
@@ -32,9 +33,17 @@ function wishMe() {
     speak(greeting);
 }
 
-window.addEventListener('load', () => {
-    speak("Initializing JARVIS....");
-    askForName();
+btn.addEventListener('click', () => {
+    if (!initialized) {
+        speak("Initializing JARVIS...");
+        setTimeout(() => {
+            askForName();
+        }, 1000); // Delay to allow proper speech execution
+        initialized = true;
+    }
+
+    content.textContent = "Listening....";
+    recognition.start();
 });
 
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -57,11 +66,6 @@ recognition.onresult = (event) => {
 recognition.onerror = (event) => {
     content.textContent = "Sorry, I didn't catch that. Please try again.";
 };
-
-btn.addEventListener('click', () => {
-    content.textContent = "Listening....";
-    recognition.start();
-});
 
 function takeCommand(message) {
     console.log(`User command: ${message}`); // Debugging output
