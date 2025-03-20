@@ -2,12 +2,16 @@ const btn = document.querySelector('.talk');
 const content = document.querySelector('.content');
 let userName = '';
 
-function speak(text, delay = 0) {
+function speak(text, callback = null, delay = 0) {
     setTimeout(() => {
+        window.speechSynthesis.cancel(); // Clear any ongoing speech
         const text_speak = new SpeechSynthesisUtterance(text);
         text_speak.rate = 1;
         text_speak.volume = 1;
         text_speak.pitch = 1;
+        text_speak.onend = () => {
+            if (callback) callback(); // Execute callback after speech ends
+        };
         window.speechSynthesis.speak(text_speak);
     }, delay);
 }
@@ -16,15 +20,16 @@ function speak(text, delay = 0) {
 btn.addEventListener('click', () => {
     content.textContent = "Listening...";
     
-    speak("Initializing JARVIS....", 500); // 0.5 sec delay
-    speak("What is your name?", 2500); // 2 sec delay after JARVIS message
-    
-    setTimeout(() => {
-        recognition.start();
-    }, 3000); // Recognition starts after JARVIS intro
+    speak("Initializing JARVIS....", () => {
+        setTimeout(() => {
+            speak("What is your name?", () => {
+                recognition.start(); // Start speech recognition only after speaking
+            });
+        }, 1000); // Ensuring enough time between both speeches
+    });
 });
 
-// Checking for Speech Recognition API
+// Speech Recognition Setup
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 if (!SpeechRecognition) {
     alert("Your browser does not support speech recognition. Please use Google Chrome.");
