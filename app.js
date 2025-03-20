@@ -4,7 +4,6 @@ let userName = '';
 
 function speak(text, callback = null, delay = 0) {
     setTimeout(() => {
-        window.speechSynthesis.cancel(); // Clear any ongoing speech
         const text_speak = new SpeechSynthesisUtterance(text);
         text_speak.rate = 1;
         text_speak.volume = 1;
@@ -16,16 +15,22 @@ function speak(text, callback = null, delay = 0) {
     }, delay);
 }
 
+function wishMe() {
+    let hour = new Date().getHours();
+    let greeting = (hour < 12) ? "Good Morning!" : (hour < 17) ? "Good Afternoon!" : "Good Evening!";
+    return greeting;
+}
+
 // Asking for Name when button is clicked
 btn.addEventListener('click', () => {
     content.textContent = "Listening...";
     
     speak("Initializing JARVIS....", () => {
-        setTimeout(() => {
+        speak(wishMe(), () => {
             speak("What is your name?", () => {
                 recognition.start(); // Start speech recognition only after speaking
             });
-        }, 1000); // Ensuring enough time between both speeches
+        });
     });
 });
 
