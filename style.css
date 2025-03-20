@@ -1,0 +1,40 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #121212; /* Dark mode for a sleek look */
+    color: white; /* Default text color */
+    text-align: center;
+    padding: 20px;
+}
+
+.content {
+    font-size: 24px; /* Bigger text for readability */
+    font-weight: bold; /* Makes it stand out */
+    color: #00ffcc; /* Bright cyan for better visibility */
+    text-shadow: 2px 2px 5px black; /* Adds depth for clarity */
+    margin-top: 20px;
+}
+
+.talk {
+    background-color: #00ffcc; /* Matches text color */
+    border: none;
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    color: black; /* Contrast for readability */
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background 0.3s;
+}
+
+.talk:hover {
+    background-color: #009977; /* Slightly darker shade on hover */
+}
+
+.container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1); /* Light transparency */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
