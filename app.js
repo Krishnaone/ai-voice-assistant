@@ -2,40 +2,27 @@ const btn = document.querySelector('.talk');
 const content = document.querySelector('.content');
 let userName = '';
 
-function speak(text) {
-    const text_speak = new SpeechSynthesisUtterance(text);
-    text_speak.rate = 1;
-    text_speak.volume = 1;
-    text_speak.pitch = 1;
-
-    window.speechSynthesis.speak(text_speak);
+function speak(text, delay = 0) {
+    setTimeout(() => {
+        const text_speak = new SpeechSynthesisUtterance(text);
+        text_speak.rate = 1;
+        text_speak.volume = 1;
+        text_speak.pitch = 1;
+        window.speechSynthesis.speak(text_speak);
+    }, delay);
 }
 
-// Asking for Name when the page loads
-window.addEventListener('load', () => {
+// Asking for Name when button is clicked
+btn.addEventListener('click', () => {
+    content.textContent = "Listening...";
+    
+    speak("Initializing JARVIS....", 500); // 0.5 sec delay
+    speak("What is your name?", 2500); // 2 sec delay after JARVIS message
+    
     setTimeout(() => {
-        speak("Initializing JARVIS....");
-    }, 1000); // Delay to allow proper speech synthesis execution
-
-    setTimeout(() => {
-        askForName();
-    }, 3000);
+        recognition.start();
+    }, 3000); // Recognition starts after JARVIS intro
 });
-
-function askForName() {
-    speak("What is your name?");
-}
-
-function setUserName(name) {
-    userName = name.toLowerCase().trim();
-    console.log("User name recognized as:", userName);
-
-    if (userName.includes('harshita')) {
-        speak("Hello, babygurl! Bestie mode activated!");
-    } else {
-        speak("Hello, Master! How can I assist you today?");
-    }
-}
 
 // Checking for Speech Recognition API
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -77,11 +64,16 @@ recognition.onresult = (event) => {
     }, 500);
 };
 
-// Start Recognition on Button Click
-btn.addEventListener('click', () => {
-    content.textContent = "Listening...";
-    recognition.start();
-});
+function setUserName(name) {
+    userName = name.toLowerCase().trim();
+    console.log("User name recognized as:", userName);
+
+    if (userName.includes('harshita')) {
+        speak("Hello, babygurl! Bestie mode activated!");
+    } else {
+        speak("Hello, Master! How can I assist you today?");
+    }
+}
 
 // Handling User Commands
 function takeCommand(message) {
